@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BoardService } from 'src/app/board.service';
-import { Comment, Card, Column } from 'src/app/models';
+import { Comment, Card } from 'src/app/models';
 
 @Component({
   selector: 'app-board-item',
@@ -9,7 +9,7 @@ import { Comment, Card, Column } from 'src/app/models';
   styleUrls: ['./board-item.component.scss']
 })
 export class BoardItemComponent implements OnInit {
-  columns!: Column[];
+  cards!: Card[]
 
   @Input() item!: Card
   @Output() emitText: EventEmitter<Comment> = new EventEmitter();
@@ -23,12 +23,7 @@ export class BoardItemComponent implements OnInit {
     private boardService: BoardService,
   ) { }
 
-  ngOnInit(): void {
-    this.boardService.getColumn().subscribe(columns => {
-      console.log(columns);
-      this.columns = columns;
-    });
-  }
+  ngOnInit() {}
 
   // add comment
   onCommentTextEmit(id: number) {
@@ -44,5 +39,4 @@ export class BoardItemComponent implements OnInit {
   onCardDelete(id: number) {
     this.emitDeleteCard.emit(id)
   }
-
 }

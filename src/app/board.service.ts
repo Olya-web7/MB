@@ -30,13 +30,6 @@ export class BoardService {
     return this.board$.asObservable()
   }
 
-  getAll(): Observable<Column[]> {
-    return this.http.get(`${environment.firebase.databaseURL}/board.json`)
-      .pipe(map((response: {[key: string]: any}) => {
-        return []
-      }))
-  }
-
   addColumn(title: string) {
     let newColumn: Column = {
       id: Date.now(),
@@ -46,7 +39,7 @@ export class BoardService {
     };
     this.board = [...this.board, newColumn];
     this.board$.next([...this.board]);
-    this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn).subscribe()
+    localStorage.setItem('Column', JSON.stringify(newColumn));
   }
 
   addCard(text: string, columnId: number) {
@@ -63,8 +56,7 @@ export class BoardService {
       return column;
     });
     this.board$.next([...this.board]);
-    localStorage.setItem('Card', newCard.text);
-    // console.log(newCard);
+    localStorage.setItem('Card', JSON.stringify(newCard));
   }
 
   deleteCard(cardId: number, columnId: number) {
@@ -75,22 +67,8 @@ export class BoardService {
       return column;
     });
     this.board$.next([...this.board]);
-    // localStorage.removeItem('Card');
+    localStorage.removeItem('Card');
   }
-
-  // deleteCard(cardId: number, columnId: number) {
-  //   this.http.delete('http://localhost:3000/api/board' + columnId)
-  //     .subscribe(() => {
-  //       console.log('deleted')
-  //     });
-  //   this.board = this.board.map((column: Column) => {
-  //     if (column.id === columnId) {
-  //       column.list = column.list.filter((card: Card) => card.id !== cardId);
-  //     }
-  //     return column;
-  //   });
-  //   this.board$.next([...this.board]);
-  // }
 
   addLike(cardId: number, columnId: number) {
     this.board = this.board.map((column: Column) => {
@@ -120,7 +98,7 @@ export class BoardService {
               text,
             };
             card.comments = [newComment, ...card.comments];
-            console.log(newComment);
+            localStorage.setItem('Comment', JSON.stringify(newComment));
           }
           return card;
         });

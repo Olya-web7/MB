@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  board: Column[] = [];
+  board!: Column[]
 
   constructor(
     public boardService: BoardService,

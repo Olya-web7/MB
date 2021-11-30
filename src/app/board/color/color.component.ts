@@ -20,8 +20,7 @@ export class ColorComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onColorEmit(color: string) {
     this.emitColor.emit(color);

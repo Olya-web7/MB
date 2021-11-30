@@ -1,30 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Card, Column } from './models';
-import { environment } from 'src/environments/environment';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators';
-
 
 @Injectable({providedIn: 'root'})
 export class BoardService {
-  boardCollection!: AngularFirestoreCollection<Column>;
-  columns!: Observable<any[]>
+  columns!: Observable<Column[]>
 
   private initBoard = [
     {id: 1, title: 'Went well', color: '#009785', list: []}
   ]
   private board: Column[] = this.initBoard
   private board$ = new BehaviorSubject<Column[]>(this.initBoard)
-
-  constructor(private http: HttpClient, public afs: AngularFirestore) {
-    this.columns = this.afs.collection('board').valueChanges();
-  }
-
-  getColumn() {
-    return this.columns;
-  }
 
   getBoard$() {
     return this.board$.asObservable()
@@ -37,26 +23,28 @@ export class BoardService {
       color: '#009785',
       list: [],
     };
-    this.board = [...this.board, newColumn];
-    this.board$.next([...this.board]);
     localStorage.setItem('Column', JSON.stringify(newColumn));
+    newColumn = JSON.parse(localStorage.getItem('Column') as string);
+    this.board.push(newColumn);
+    this.board$.next([...this.board]);
   }
 
   addCard(text: string, columnId: number) {
-    const newCard: Card = {
+    let newCard: Card = {
       id: Date.now(),
       text,
       like: 0,
       comments: [],
     };
+    localStorage.setItem('Card', JSON.stringify(newCard));
     this.board = this.board.map((column: Column) => {
       if (column.id === columnId) {
+        newCard = JSON.parse(localStorage.getItem('Card') as string);
         column.list = [...column.list, newCard];
       }
       return column;
     });
     this.board$.next([...this.board]);
-    localStorage.setItem('Card', JSON.stringify(newCard));
   }
 
   deleteCard(cardId: number, columnId: number) {

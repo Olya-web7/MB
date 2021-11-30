@@ -17,7 +17,9 @@ export class BoardComponent implements OnInit {
     public auth: AuthService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.board = JSON.parse(localStorage.getItem('Column') as string);
+  }
 
   onAddCard(text: string, columnId: number) {
     if (text) {

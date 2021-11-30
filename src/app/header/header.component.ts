@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { BoardService } from '../board.service';
 import { Column } from '../models';
-// import { Column } from '../models';
 
 @Component({
   selector: 'app-header',
@@ -20,10 +19,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.boardService.getColumn().subscribe(column => {
-    //   console.log(column);
-    //   this.column = column;
-    // });
   }
 
   addColumn(event: string) {

@@ -58,7 +58,7 @@ export class BoardService {
     });
     this.board$.next([...this.board]);
     localStorage.setItem('Card', newCard.text);
-    console.log(newCard);
+    // console.log(newCard);
   }
 
   deleteCard(cardId: number, columnId: number) {

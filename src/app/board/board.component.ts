@@ -17,8 +17,7 @@ export class BoardComponent implements OnInit {
     public auth: AuthService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onAddCard(text: string, columnId: number) {
     if (text) {

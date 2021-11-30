@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Card, Column } from './models';
 import { environment } from 'src/environments/environment';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({providedIn: 'root'})
 export class BoardService {
@@ -28,8 +30,11 @@ export class BoardService {
     return this.board$.asObservable()
   }
 
-  getAll() {
-    return this.http.get(`$`)
+  getAll(): Observable<Column[]> {
+    return this.http.get(`${environment.firebase.databaseURL}/board.json`)
+      .pipe(map((response: {[key: string]: any}) => {
+        return []
+      }))
   }
 
   addColumn(title: string) {
@@ -41,8 +46,7 @@ export class BoardService {
     };
     this.board = [...this.board, newColumn];
     this.board$.next([...this.board]);
-    this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn)
-      .subscribe()
+    this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn).subscribe()
   }
 
   addCard(text: string, columnId: number) {

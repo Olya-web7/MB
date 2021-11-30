@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static(__dirname + '/dist/MB'));
+app.use(express.static(__dirname + '/dist/mb'));
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/MB'));
+  res.sendFile(path.join(__dirname + '/dist/mb'));
 });
 
 app.listen(process.env.PORT || 8080);

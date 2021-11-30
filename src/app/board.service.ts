@@ -28,6 +28,10 @@ export class BoardService {
     return this.board$.asObservable()
   }
 
+  getAll() {
+    return this.http.get(`$`)
+  }
+
   addColumn(title: string) {
     let newColumn: Column = {
       id: Date.now(),
@@ -38,9 +42,7 @@ export class BoardService {
     this.board = [...this.board, newColumn];
     this.board$.next([...this.board]);
     this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn)
-      .subscribe(() => {
-        console.log(newColumn);
-      })
+      .subscribe()
   }
 
   addCard(text: string, columnId: number) {

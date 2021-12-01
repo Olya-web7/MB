@@ -11,6 +11,7 @@ import { Column } from '../models';
 })
 export class HeaderComponent implements OnInit {
   column!: Column;
+  board!: Column[]
 
   constructor(
     public boardService: BoardService,
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
 
   addColumn(event: string) {
     if (event) {
+      // event = JSON.parse(localStorage.getItem('Column') as string).title;
       this.boardService.addColumn(event)
     }
   }

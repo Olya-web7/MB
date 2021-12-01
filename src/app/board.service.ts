@@ -24,7 +24,7 @@ export class BoardService {
       list: [],
     };
     localStorage.setItem('Column', JSON.stringify(newColumn));
-    newColumn = JSON.parse(localStorage.getItem('Column') as string);
+    // newColumn = JSON.parse(localStorage.getItem('Column') as string);
     this.board.push(newColumn);
     this.board$.next([...this.board]);
   }

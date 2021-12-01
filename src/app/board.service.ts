@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Card, Column } from './models';
 
 @Injectable({providedIn: 'root'})
 export class BoardService {
-  columns!: Observable<Column[]>
 
   private initBoard = [
     {id: 1, title: 'Went well', color: '#009785', list: []}
@@ -24,25 +23,11 @@ export class BoardService {
       list: [],
     };
     localStorage.setItem('Column', JSON.stringify(newColumn));
-    this.board.push({ ...newColumn, title: JSON.parse(localStorage.getItem('Column') as string).title });
-    console.log(this.board);
+    this.board = [...this.board, newColumn]
+    newColumn.title = JSON.parse(localStorage.getItem('Column') as string).title
 
-    this.board$.next([
-      ...this.board,
-    ]);
+    this.board$.next([...this.board]);
   }
-
-  // addColumn(title: string) {
-  //   let newColumn: Column = {
-  //     id: Date.now(),
-  //     title: title,
-  //     color: '#009785',
-  //     list: [],
-  //   };
-  //   localStorage.setItem('Column', JSON.stringify(newColumn));
-  //   this.board.push(newColumn);
-  //   this.board$.next([...this.board]);
-  // }
 
   addCard(text: string, columnId: number) {
     let newCard: Card = {
@@ -66,11 +51,11 @@ export class BoardService {
     this.board = this.board.map((column: Column) => {
       if (column.id === columnId) {
         column.list = column.list.filter((card: Card) => card.id !== cardId);
+        localStorage.removeItem('Card');
       }
       return column;
     });
     this.board$.next([...this.board]);
-    localStorage.removeItem('Card');
   }
 
   addLike(cardId: number, columnId: number) {

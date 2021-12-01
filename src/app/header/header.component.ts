@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
 
   addColumn(event: string) {
     if (event) {
-      // event = JSON.parse(localStorage.getItem('Column') as string).title;
       this.boardService.addColumn(event)
     }
   }

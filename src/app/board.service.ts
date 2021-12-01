@@ -24,10 +24,25 @@ export class BoardService {
       list: [],
     };
     localStorage.setItem('Column', JSON.stringify(newColumn));
-    // newColumn = JSON.parse(localStorage.getItem('Column') as string);
-    this.board.push(newColumn);
-    this.board$.next([...this.board]);
+    this.board.push({ ...newColumn, title: JSON.parse(localStorage.getItem('Column') as string).title });
+    console.log(this.board);
+
+    this.board$.next([
+      ...this.board,
+    ]);
   }
+
+  // addColumn(title: string) {
+  //   let newColumn: Column = {
+  //     id: Date.now(),
+  //     title: title,
+  //     color: '#009785',
+  //     list: [],
+  //   };
+  //   localStorage.setItem('Column', JSON.stringify(newColumn));
+  //   this.board.push(newColumn);
+  //   this.board$.next([...this.board]);
+  // }
 
   addCard(text: string, columnId: number) {
     let newCard: Card = {

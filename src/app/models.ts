@@ -16,7 +16,3 @@ export interface Column {
   color?: string,
   list: Card[]
 }
-
-export interface FbCreateResponse {
-  name?: string
-}

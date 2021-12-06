@@ -4,7 +4,7 @@ import { AuthData, FbAuthResponse } from './auth-data.model';
 import { Observable, Subject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

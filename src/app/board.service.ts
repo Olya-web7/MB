@@ -21,7 +21,6 @@ export class BoardService {
     let newColumn: Column = {
       id: Date.now(),
       title: title,
-      color: '#009785',
       list: [],
     };
     if (localStorage.getItem('board') == null) {
@@ -97,16 +96,6 @@ export class BoardService {
           return card;
         });
         column.list = list;
-      }
-      return column;
-    });
-    this.board$.next([...this.board]);
-  }
-
-  changeColumnColor(color: string, columnId: number) {
-    this.board = this.board.map((column: Column) => {
-      if (column.id === columnId) {
-        column.color = color;
       }
       return column;
     });

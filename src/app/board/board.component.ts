@@ -25,7 +25,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  onDeleteCard(cardId: number, columnId: number) {
+  onDeleteCard(cardId: number, columnId: any) {
     this.boardService.deleteCard(cardId, columnId)
   }
 
@@ -36,11 +36,7 @@ export class BoardComponent implements OnInit {
 
   onAddComment(event: { id: number, text: string }, columnId: number) {
     this.boardService.addComment(columnId, event.id, event.text)
-  }
-
-  onColorChange(color: string, columnId: number) {
-    this.boardService.changeColumnColor(color, columnId)
-  }
+  } 
 
   drop(event: CdkDragDrop<Card[]>) {
     if (event.previousContainer === event.container) {

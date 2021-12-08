@@ -13,6 +13,5 @@ export interface Card {
 export interface Column {
   id: number,
   title?: string,
-  color?: string,
   list: Card[]
 }
